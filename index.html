@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <title>Alarme Js</title>
+    <style>
+        .container {
+            text-align: center;
+        }
+
+        button{
+            background:mediumturquoise;
+            color: white;
+            font-size: 40px;
+            padding: 8px 20px;
+            cursor: pointer;
+            border: 0;
+        }
+        
+        .namein{
+            text-align: center;
+            color:darkorchid;
+            font-family: Cambria;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="namein">
+        <h1>Alarme <p>por: Ruan</p></h1>
+    </div>
+    <audio id="sound" src="alarme.mp3" style="display: none;"></audio>
+
+    <div class="container">
+      <h2>Minutos:</h2>
+      <select id="minutos" name="minutos"></select>
+
+      <h2>Segundos:</h2>
+      <select id="segundos" name="segundos"></select>
+      <br/>
+      <br/>
+      <button id="comecar">Iniciar!!</button>
+ 
+      <div id="display">
+          <h3></h3>
+      </div><!--display-->
+    </div><!--container-->
+
+    <script>
+        var display = document.getElementById('display');
+        var minutos = document.getElementById('minutos');
+        var segundos = document.getElementById('segundos');
+        var comecar = document.getElementById('comecar');
+
+        var crononSeg;
+        var minAtual;
+        var secAtual;
+
+        var interval;
+
+        for(var i = 0; i <=60; i++){
+            minutos.innerHTML+='<option value= "'+i+'">'+i+'</option>';
+        }
+
+        for(var i = 1; i <=60; i++){
+            segundos.innerHTML+='<option value= "'+i+'">'+i+'</option>';
+        }
+
+        comecar.addEventListener('click',function(){
+            minAtual = minutos.value;
+            secAtual = segundos.value;
+
+            display.childNodes[1].innerHTML = minAtual+":"+secAtual;
+
+            interval = setInterval(function(){
+ 
+                secAtual--;
+                if(secAtual <= 0){
+                    if(minAtual > 0){
+                        minAtual--;
+                        secAtual = 59;
+                    }else{
+                        document.getElementById("sound").play();
+                        alert("Finalizado!");
+                        
+                        clearInterval(interval);
+                    }
+                }
+                display.childNodes[1].innerHTML = minAtual + ":" + secAtual;
+            },1000);
+        })
+    </script>
+</body>
+
+</html>
